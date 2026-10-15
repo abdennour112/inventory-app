@@ -1,0 +1,3 @@
+NAME                  IMAGE                  COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+inventory-app-app-1   inventory-app-app      "gunicorn --bind 0.0…"   app       15 seconds ago   Up 14 seconds (healthy)   127.0.0.1:8001->8000/tcp
+inventory-app-db-1    postgres:17-bookworm   "docker-entrypoint.s…"   db        33 seconds ago   Up 32 seconds (healthy)   5432/tcp

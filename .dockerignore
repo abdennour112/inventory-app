@@ -1,0 +1,16 @@
+.git
+.env
+.venv
+__pycache__
+docs
+*.log
+.secrets
+backups
+*.dump
+*.pem
+*.key
+
+agent_bridge/
+fiverr-materials/
+AGENT_HANDOFF_BRIEFING.md
+scripts/run_vm_python.py

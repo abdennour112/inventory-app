@@ -1,0 +1,87 @@
+services:
+  app:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_NAME: inventory
+      DB_USER: inventory_web
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      SESSION_KEY_FILE: /run/secrets/session_key
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    secrets:
+      - source: app_db_password
+        target: db_password
+      - session_key
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8001:8000"
+    restart: unless-stopped
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+  maintenance:
+    profiles: [maintenance]
+    build: .
+    environment:
+      DB_HOST: db
+      DB_NAME: inventory
+      DB_USER: inventory
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      SESSION_KEY_FILE: /run/secrets/session_key
+      ADMIN_PASSWORD_FILE: /run/secrets/admin_password
+      APP_DB_PASSWORD_FILE: /run/secrets/app_db_password
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    secrets:
+      - db_password
+      - app_db_password
+      - session_key
+      - admin_password
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: inventory
+      POSTGRES_USER: inventory
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    volumes:
+      - inventory_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inventory -d inventory"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+volumes:
+  inventory_data:
+secrets:
+  app_db_password:
+    file: .secrets/app_db_password
+  db_password:
+    file: .secrets/db_password
+  session_key:
+    file: .secrets/session_key
+  admin_password:
+    file: .secrets/admin_password

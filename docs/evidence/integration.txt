@@ -1,0 +1,42 @@
+PASS: anonymous inventory access requires login
+PASS: missing CSRF token rejected
+PASS: page available: /login
+PASS: wrong password rejected
+PASS: page available: /login
+PASS: correct password accepted
+PASS: session cookie has HttpOnly and SameSite
+PASS: page available: /categories
+PASS: category created through protected form
+PASS: page available: /products/new
+PASS: negative price rejected
+PASS: page available: /products/new
+PASS: non-finite price rejected
+PASS: page available: /products/new
+PASS: product created through form
+PASS: page available: /products/new
+PASS: duplicate SKU rejected
+PASS: product name is HTML escaped
+PASS: security response headers present
+PASS: page available: /products/9
+PASS: receipt: 0 + 10 = 10
+PASS: page available: /products/9
+PASS: sale: 10 - 2 = 8
+PASS: page available: /products/9
+PASS: receipt: 8 + 5 = 13
+PASS: page available: /products/9
+PASS: overselling rejected without partial movement
+PASS: page available: /products/9
+PASS: page available: /products/9
+PASS: duplicate form submission changes stock only once
+PASS: page available: /products/9
+PASS: zero movement quantity rejected
+PASS: two simultaneous sales of final unit: exactly one succeeds
+PASS: concurrent duplicate request rolls back extra stock update
+PASS: low-stock filter finds below-threshold product
+PASS: movement history renders
+PASS: health endpoint checks database
+PASS: page available: /
+PASS: logout removes inventory access
+
+ALL 39 CHECKS PASSED
+Temporary test records removed.

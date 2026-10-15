@@ -1,0 +1,1 @@
+PASS: restored categories, products and movements match the live data.

@@ -1,0 +1,3 @@
+CONTAINER             REPOSITORY          TAG                 PLATFORM            IMAGE ID            SIZE                CREATED
+inventory-app-app-1   inventory-app-app   latest              linux/amd64         9fb8cb6ffa70        217MB               2 minutes ago
+inventory-app-db-1    postgres            17-bookworm         linux/amd64         3645570cccdf        631MB               6 days ago
