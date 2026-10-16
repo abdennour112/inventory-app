@@ -9,6 +9,16 @@ price in USD and a low-stock threshold. Demo products are fictional.
 
 ![Inventory dashboard with fictional demo products](docs/screenshots/dashboard.jpg)
 
+### App screenshots
+
+These screenshots use fictional products from my local lab.
+
+![Product details and stock controls](docs/screenshots/product.jpg)
+
+![Stock movement history](docs/screenshots/movements.jpg)
+
+![Product categories](docs/screenshots/categories.jpg)
+
 ## Architecture
 
 ```mermaid
@@ -102,3 +112,4 @@ not protect against loss of that VM. The checks here are a scoped source and dep
 The web container uses a separate database role with data permissions only. Database administrator credentials and the application admin password are mounted only in the temporary `maintenance` service. Run `sudo python3 scripts/rotate-secrets.py` to rotate the application administrator password and session key. It rebuilds the image, preserves file ownership, checks both old and new credentials, revokes existing sessions, and attempts rollback on failure. This does not change the Debian login password.
 
 Pinned Python versions are installed from `requirements.lock.txt`. Re-audit and update dependencies regularly; a clean advisory check is not a guarantee against unknown vulnerabilities.
+
